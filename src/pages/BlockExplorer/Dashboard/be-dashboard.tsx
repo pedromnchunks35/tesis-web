@@ -1,6 +1,7 @@
 import CardDataStats from "../../../components/CardDataStats"
 import ChartThree from "../../../components/Charts/ChartThree";
 import MultiChart from "../../GeneralNetwork/Dashboard/multiChart";
+import { BlockExplorerBlockList } from "./be-blocklist";
 import { CircularBeDashboard } from "./circular-dash";
 import { PeerList } from "./peer-list";
 
@@ -76,6 +77,9 @@ const BlockExplorerDashboard = () => {
             </div>
             <div className="pt-10">
                 <CircularBeDashboard />
+            </div>
+            <div className="pt-10">
+                <BlockExplorerBlockList />
             </div>
         </>
 
