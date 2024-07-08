@@ -1,42 +1,47 @@
 import React, { ReactNode } from 'react';
+import DropdownDefault from './Dropdowns/DropdownDefault';
 
 interface CardDataStatsProps {
   title: string;
   total: string;
-  rate: string;
   levelUp?: boolean;
   levelDown?: boolean;
+  selector?: boolean;
   children: ReactNode;
 }
 
 const CardDataStats: React.FC<CardDataStatsProps> = ({
   title,
   total,
-  rate,
   levelUp,
   levelDown,
+  selector,
   children,
 }) => {
   return (
-    <div className="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
+    <div className="relative rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="flex h-11.5 w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-4">
         {children}
       </div>
-
+      {selector ? <div className='absolute right-5 top-5'>
+        <DropdownDefault>
+          <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m16 10 3-3m0 0-3-3m3 3H5v3m3 4-3 3m0 0 3 3m-3-3h14v-3" />
+          </svg>
+        </DropdownDefault>
+      </div> : <div />}
       <div className="mt-4 flex items-end justify-between">
         <div>
           <h4 className="text-title-md font-bold text-black dark:text-white">
-            {total}
+            {total.length > 8 ? total.substring(0, 13) + "..." : total}
           </h4>
           <span className="text-sm font-medium">{title}</span>
         </div>
 
         <span
-          className={`flex items-center gap-1 text-sm font-medium ${
-            levelUp && 'text-meta-3'
-          } ${levelDown && 'text-meta-5'} `}
+          className={`flex items-center gap-1 text-sm font-medium ${levelUp && 'text-meta-3'
+            } ${levelDown && 'text-meta-5'} `}
         >
-          {rate}
 
           {levelUp && (
             <svg
