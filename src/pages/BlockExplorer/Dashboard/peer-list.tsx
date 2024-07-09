@@ -1,63 +1,112 @@
-import { BRAND } from '../../../types/brand';
-import BrandOne from '../../../images/brand/brand-01.svg';
-import BrandTwo from '../../../images/brand/brand-02.svg';
-import BrandThree from '../../../images/brand/brand-03.svg';
-import BrandFour from '../../../images/brand/brand-04.svg';
-import BrandFive from '../../../images/brand/brand-05.svg';
-const brandData: BRAND[] = [
+import { useState } from 'react';
+interface datai {
+    name: String
+    ip: String
+    alive: boolean
+}
+const data: datai[] = [
     {
-        logo: BrandOne,
-        name: 'Google',
-        visitors: 3.5,
-        revenues: '5,768',
-        sales: 590,
-        conversion: 4.8,
+        name: "orgx-peer1",
+        alive: true,
+        ip: "orgx-peer1:80"
     },
     {
-        logo: BrandTwo,
-        name: 'Twitter',
-        visitors: 2.2,
-        revenues: '4,635',
-        sales: 467,
-        conversion: 4.3,
+        name: "orgy-peer1",
+        alive: false,
+        ip: "orgy-peer1:80"
     },
     {
-        logo: BrandThree,
-        name: 'Github',
-        visitors: 2.1,
-        revenues: '4,290',
-        sales: 420,
-        conversion: 3.7,
+        name: "orgy-peer1",
+        alive: false,
+        ip: "orgy-peer1:80"
     },
     {
-        logo: BrandFour,
-        name: 'Vimeo',
-        visitors: 1.5,
-        revenues: '3,580',
-        sales: 389,
-        conversion: 2.5,
+        name: "orgy-peer1",
+        alive: false,
+        ip: "orgy-peer1:80"
     },
     {
-        logo: BrandFive,
-        name: 'Facebook',
-        visitors: 3.5,
-        revenues: '6,768',
-        sales: 390,
-        conversion: 4.2,
-    },
-];
-export const PeerList = () => {
-    return (
-        <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-            <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
-                Peer List
-            </h4>
+        name: "orgy-peer1",
+        alive: false,
+        ip: "orgy-peer1:80"
+    }
+]
+const icon1 = (<svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+    <path d="M18 17h-.09c.058-.33.088-.665.09-1v-1h1a1 1 0 0 0 0-2h-1.09a5.97 5.97 0 0 0-.26-1H17a2 2 0 0 0 2-2V8a1 1 0 1 0-2 0v2h-.54a6.239 6.239 0 0 0-.46-.46V8a3.963 3.963 0 0 0-.986-2.6l.693-.693A1 1 0 0 0 16 4V3a1 1 0 1 0-2 0v.586l-.661.661a3.753 3.753 0 0 0-2.678 0L10 3.586V3a1 1 0 1 0-2 0v1a1 1 0 0 0 .293.707l.693.693A3.963 3.963 0 0 0 8 8v1.54a6.239 6.239 0 0 0-.46.46H7V8a1 1 0 0 0-2 0v2a2 2 0 0 0 2 2h-.65a5.97 5.97 0 0 0-.26 1H5a1 1 0 0 0 0 2h1v1a6 6 0 0 0 .09 1H6a2 2 0 0 0-2 2v2a1 1 0 1 0 2 0v-2h.812A6.012 6.012 0 0 0 11 21.907V12a1 1 0 0 1 2 0v9.907A6.011 6.011 0 0 0 17.188 19H18v2a1 1 0 0 0 2 0v-2a2 2 0 0 0-2-2Zm-4-8.65a5.922 5.922 0 0 0-.941-.251l-.111-.017a5.52 5.52 0 0 0-1.9 0l-.111.017A5.925 5.925 0 0 0 10 8.35V8a2 2 0 1 1 4 0v.35Z" />
+</svg>
+)
+const icon2 = (
+    <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 6h8M6 10h12M8 14h8M6 18h12" />
+    </svg>
 
+)
+export const PeerList = () => {
+    const [pageSize, setPageSize] = useState(5);
+    const [currentPage, setCurrentPage] = useState(0);
+    const setPageAndUpdateQuery = (num: number) => {
+        setPageSize(num);
+    }
+    const setCurrentPageAndUpdateQuery = (num: number) => {
+        setCurrentPage(num);
+    }
+    return (
+        <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+            <div className='flex flex-row w-full justify-between'>
+                <h4 className="mb-6 pt-5 w-10/12 text-xl font-semibold text-black dark:text-white">
+                    Peer List
+                </h4>
+                <div className={currentPage == 0 || data.length != pageSize ? 'flex flex-row justify-between w-3/12 bg-gray-2 dark:bg-meta-4 rounded-xl mt-2 mb-2' : 'flex flex-row justify-between w-3/12 bg-gray-2 dark:bg-meta-4 rounded-xl m-2'}>
+                    <div onClick={() => setPageAndUpdateQuery(5)} className={pageSize == 5 ? 'm-5 p-2 font-bold text-black bg-white cursor-pointer border' : 'm-5 p-2 font-bold cursor-pointer border'}>
+                        <h1>5</h1>
+                    </div>
+                    <div onClick={() => setPageAndUpdateQuery(10)} className={pageSize == 10 ? 'm-5 p-1 pt-2 font-bold text-black bg-white cursor-pointer border' : 'm-5 p-1 pt-2 font-bold cursor-pointer border'}>
+                        <h1>10</h1>
+                    </div>
+                    <div onClick={() => setPageAndUpdateQuery(15)} className={pageSize == 15 ? 'm-5 p-1 pt-2 font-bold bg-white text-black cursor-pointer border' : 'm-5 p-1 pt-2 font-bold cursor-pointer border'}>
+                        <h1>15</h1>
+                    </div>
+                </div>
+                <div className={data.length != pageSize ? 'hidden' : 'flex flex-row pt-9 pl-10'}>
+                    {
+                        currentPage != 0 ?
+                            <svg
+                                onClick={() => setCurrentPageAndUpdateQuery(currentPage - 1)}
+                                className={currentPage != 0 ? "cursor-pointer w-6 h-6 text-gray-800 dark:text-white" : "hidden"}
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                fill="none"
+                                viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 19-7-7 7-7" />
+                            </svg>
+                            :
+                            <div />
+                    }
+                    {
+                        data.length == pageSize ?
+                            <svg
+                                onClick={() => setCurrentPageAndUpdateQuery(currentPage + 1)}
+                                className={data.length == pageSize ? "cursor-pointer w-6 h-6 text-gray-800 dark:text-white" : "hidden"}
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                fill="none"
+                                viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7" />
+                            </svg>
+                            :
+                            <div />
+                    }
+                </div>
+            </div>
             <div className="flex flex-col">
                 <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-4">
                     <div className="p-2.5 xl:p-5">
                         <h5 className="text-sm font-medium uppercase xsm:text-base">
-                            Hospital 
+                            Hospital
                         </h5>
                     </div>
                     <div className="p-2.5 text-center xl:p-5">
@@ -77,9 +126,9 @@ export const PeerList = () => {
                     </div>
                 </div>
 
-                {brandData.map((brand, key) => (
+                {data.map((obj, key) => (
                     <div
-                        className={`grid grid-cols-3 sm:grid-cols-4 ${key === brandData.length - 1
+                        className={`grid grid-cols-3 sm:grid-cols-4 ${key === data.length - 1
                             ? ''
                             : 'border-b border-stroke dark:border-strokedark'
                             }`}
@@ -87,23 +136,23 @@ export const PeerList = () => {
                     >
                         <div className="flex items-center gap-3 p-2.5 xl:p-5">
                             <div className="flex-shrink-0">
-                                <img src={brand.logo} alt="Brand" />
+                                {obj.alive ? icon2 : icon1}
                             </div>
                             <p className="hidden text-black dark:text-white sm:block">
-                                {brand.name}
+                                {obj.name}
                             </p>
                         </div>
 
                         <div className="flex items-center justify-center p-2.5 xl:p-5">
-                            <p className="text-black dark:text-white">{brand.visitors}K</p>
+                            <p className="text-black dark:text-white">{obj.name}</p>
                         </div>
 
                         <div className="flex items-center justify-center p-2.5 xl:p-5">
-                            <p className="text-meta-3">${brand.revenues}</p>
+                            <p className="text-black dark:text-white">{obj.ip}</p>
                         </div>
 
                         <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                            <p className="text-black dark:text-white">{brand.sales}</p>
+                            <p className={obj.alive ? "text-meta-3" : "text-orange-800"}>{obj.alive ? "YES" : "NO"}</p>
                         </div>
                     </div>
                 ))}

@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom"
-import Buttons from "../../UiElements/Buttons"
 
 const block = [
     {
@@ -25,6 +24,15 @@ const block = [
     },
 
 ]
+const LoadMore = () => {
+    block.push({
+        "block_name": "Block 11",
+        "channel_name": "Channel1",
+        "data_hash": "sqhudhgsoihqiohdioahs",
+        "number_of_tx": 1,
+        "time": "22:12:00"
+    });
+}
 export const BlockExplorerBlockList = () => {
     return (
         <div className="flex flex-row sm:px-7.5 rounded-sm border border-stroke px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-5">
@@ -80,6 +88,7 @@ export const BlockExplorerBlockList = () => {
                     <Link
                         to="#"
                         className="inline-flex items-center justify-center rounded-full bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+                        onClick={LoadMore}
                     >
                         Load More
                     </Link>
