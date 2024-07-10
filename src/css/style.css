@@ -312,3 +312,8 @@ span.flatpickr-weekday,
     0 0 30px #323232,
     0 0 40px hsl(176.61, 42.28%, 40.7%) 19.6%;
 }
+
+.css-boundarie-opacity {
+  background-color: rgba(0, 0, 0, 0.8); /* Black background with 50% opacity */
+  /* Other styles */
+}
