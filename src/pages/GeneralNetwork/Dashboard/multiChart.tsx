@@ -164,7 +164,7 @@ const MultiChart: React.FC<Props> = ({ name }) => {
                 <div className="flex justify-end hover:bg-whiter">
                     <div className="inline-flex items-center rounded-md bg-whiter p-1.5 dark:bg-meta-4">
                         <svg
-                            className="w-6 h-6 text-gray-800 dark:text-white"
+                            className="cursor-pointer w-6 h-6 text-gray-800 dark:text-white"
                             aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg"
                             width="24"
