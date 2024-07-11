@@ -18,6 +18,11 @@ import DefaultLayout from './layout/DefaultLayout';
 import { Home } from './pages/Home/Home';
 import { GeneralNetworkDash } from './pages/GeneralNetwork/Dashboard/dashboard';
 import BlockExplorerDashboard from './pages/BlockExplorer/Dashboard/be-dashboard';
+import { BlockExplorerNetwork } from './pages/BlockExplorer/Network/be-network';
+import { BlockExplorerBlocks } from './pages/BlockExplorer/Blocks/be-blocks';
+import { BlockExplorerTransactions } from './pages/BlockExplorer/Transactions/be-transactions';
+import { BlockExplorerChaincodes } from './pages/BlockExplorer/Chaincodes/be-chaincodes';
+import { BlockExplorerChannels } from './pages/BlockExplorer/Channels/be-channels';
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
@@ -48,7 +53,7 @@ function App() {
           path="/generalnetwork-dashboard"
           element={
             <>
-              <PageTitle title="General Network Dashabord" />
+              <PageTitle title="General Network Dashbord" />
               <GeneralNetworkDash />
             </>
           }
@@ -58,7 +63,52 @@ function App() {
           element={
             <>
               <PageTitle title="General Network Dashabord" />
-              <BlockExplorerDashboard/>
+              <BlockExplorerDashboard />
+            </>
+          }
+        />
+        <Route
+          path="/blockexplorer-network"
+          element={
+            <>
+              <PageTitle title="Block Explorer Network" />
+              <BlockExplorerNetwork />
+            </>
+          }
+        />
+        <Route
+          path="/blockexplorer-blocks"
+          element={
+            <>
+              <PageTitle title="Block Explorer Blocks" />
+              <BlockExplorerBlocks />
+            </>
+          }
+        />
+        <Route
+          path="/blockexplorer-transactions"
+          element={
+            <>
+              <PageTitle title="Block Explorer Transactions" />
+              <BlockExplorerTransactions />
+            </>
+          }
+        />
+        <Route
+          path="/blockexplorer-chaincodes"
+          element={
+            <>
+              <PageTitle title="Block Explorer Chaincodes" />
+              <BlockExplorerChaincodes />
+            </>
+          }
+        />
+        <Route
+          path="/blockexplorer-channels"
+          element={
+            <>
+              <PageTitle title="Block Explorer Channels" />
+              <BlockExplorerChannels />
             </>
           }
         />
@@ -90,56 +140,11 @@ function App() {
           }
         />
         <Route
-          path="/forms/form-layout"
-          element={
-            <>
-              <PageTitle title="Form Layout | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <FormLayout />
-            </>
-          }
-        />
-        <Route
-          path="/tables"
-          element={
-            <>
-              <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Tables />
-            </>
-          }
-        />
-        <Route
           path="/settings"
           element={
             <>
               <PageTitle title="Settings | TailAdmin - Tailwind CSS Admin Dashboard Template" />
               <Settings />
-            </>
-          }
-        />
-        <Route
-          path="/chart"
-          element={
-            <>
-              <PageTitle title="Basic Chart | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Chart />
-            </>
-          }
-        />
-        <Route
-          path="/ui/alerts"
-          element={
-            <>
-              <PageTitle title="Alerts | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Alerts />
-            </>
-          }
-        />
-        <Route
-          path="/ui/buttons"
-          element={
-            <>
-              <PageTitle title="Buttons | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Buttons />
             </>
           }
         />

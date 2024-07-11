@@ -1,34 +1,26 @@
-import { useState } from 'react';
+import { useState } from "react";
 interface datai {
+    icon: number
     name: String
     ip: String
+    type_component: String
+    msp: String
+    transactions: number
+    chaincodes: number
+    channels: number
     alive: boolean
 }
 const data: datai[] = [
     {
-        name: "orgx-peer1",
-        alive: true,
-        ip: "orgx-peer1:80"
-    },
-    {
-        name: "orgy-peer1",
-        alive: false,
-        ip: "orgy-peer1:80"
-    },
-    {
-        name: "orgy-peer1",
-        alive: false,
-        ip: "orgy-peer1:80"
-    },
-    {
-        name: "orgy-peer1",
-        alive: false,
-        ip: "orgy-peer1:80"
-    },
-    {
-        name: "orgy-peer1",
-        alive: false,
-        ip: "orgy-peer1:80"
+        icon: 1,
+        name: "dep.x.peer1",
+        ip: "dep.x.peer1:80",
+        type_component: "peer",
+        msp: "orgx",
+        transactions: 2,
+        chaincodes: 3,
+        channels: 3,
+        alive: true
     }
 ]
 const icon1 = (<svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -41,7 +33,7 @@ const icon2 = (
     </svg>
 
 )
-export const PeerList = () => {
+export const BlockExplorerNetworkList = () => {
     const [pageSize, setPageSize] = useState(5);
     const [currentPage, setCurrentPage] = useState(0);
     const setPageAndUpdateQuery = (num: number) => {
@@ -54,7 +46,7 @@ export const PeerList = () => {
         <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
             <div className='flex flex-row w-full justify-between'>
                 <h4 className="mb-6 pt-5 w-10/12 text-xl font-semibold text-black dark:text-white">
-                    Peer List
+                    Components List
                 </h4>
                 <div className={currentPage == 0 || data.length != pageSize ? 'flex flex-row justify-between w-3/12 bg-gray-2 dark:bg-meta-4 rounded-xl mt-2 mb-2' : 'flex flex-row justify-between w-3/12 bg-gray-2 dark:bg-meta-4 rounded-xl m-2'}>
                     <div onClick={() => setPageAndUpdateQuery(5)} className={pageSize == 5 ? 'm-5 p-2 font-bold text-black bg-white cursor-pointer border' : 'm-5 p-2 font-bold cursor-pointer border'}>
@@ -103,15 +95,35 @@ export const PeerList = () => {
                 </div>
             </div>
             <div className="flex flex-col">
-                <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-3">
+                <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-7">
                     <div className="p-2.5 xl:p-5">
                         <h5 className="text-sm font-medium uppercase xsm:text-base">
-                        Name
+                            Name
                         </h5>
                     </div>
                     <div className="p-2.5 text-center xl:p-5">
                         <h5 className="text-sm font-medium uppercase xsm:text-base">
                             Ip address
+                        </h5>
+                    </div>
+                    <div className="hidden p-2.5 text-center sm:block xl:p-5">
+                        <h5 className="text-sm font-medium uppercase xsm:text-base">
+                            Type of Component
+                        </h5>
+                    </div>
+                    <div className="hidden p-2.5 text-center sm:block xl:p-5">
+                        <h5 className="text-sm font-medium uppercase xsm:text-base">
+                            Msp
+                        </h5>
+                    </div>
+                    <div className="hidden p-2.5 text-center sm:block xl:p-5">
+                        <h5 className="text-sm font-medium uppercase xsm:text-base">
+                            Transactions
+                        </h5>
+                    </div>
+                    <div className="hidden p-2.5 text-center sm:block xl:p-5">
+                        <h5 className="text-sm font-medium uppercase xsm:text-base">
+                            Chaincodes
                         </h5>
                     </div>
                     <div className="hidden p-2.5 text-center sm:block xl:p-5">
@@ -123,7 +135,7 @@ export const PeerList = () => {
 
                 {data.map((obj, key) => (
                     <div
-                        className={`grid grid-cols-3 sm:grid-cols-3 ${key === data.length - 1
+                        className={`grid grid-cols-3 sm:grid-cols-7 ${key === data.length - 1
                             ? ''
                             : 'border-b border-stroke dark:border-strokedark'
                             }`}
@@ -138,9 +150,24 @@ export const PeerList = () => {
                             </p>
                         </div>
 
-
                         <div className="flex items-center justify-center p-2.5 xl:p-5">
                             <p className="text-black dark:text-white">{obj.ip}</p>
+                        </div>
+
+                        <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+                            <p className="text-black dark:text-white">{obj.type_component}</p>
+                        </div>
+
+                        <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+                            <p className="text-black dark:text-white">{obj.msp}</p>
+                        </div>
+
+                        <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+                            <p className="text-black dark:text-white">{obj.transactions}</p>
+                        </div>
+
+                        <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+                            <p className="text-black dark:text-white">{obj.chaincodes}</p>
                         </div>
 
                         <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">

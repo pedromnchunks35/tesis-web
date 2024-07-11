@@ -5,10 +5,13 @@ import { Link } from 'react-router-dom';
 
 const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
+  const checkBoxEnablerTrigger = () => {
+    let box: HTMLDivElement = document.getElementById("checkbox-enabler");
+    box.classList.add("hidden");
+  }
   return (
     <div className="dark:bg-boxdark-2 dark:text-bodydark relative">
-      <div id='checkbox-enabler' className='flex flex-row justify-center items-center w-screen h-screen bg-black absolute inset-0 z-9999 css-boundarie-opacity'>
+      <div id='checkbox-enabler' className='hidden flex flex-row justify-center items-center w-screen h-screen bg-black absolute inset-0 z-9999 css-boundarie-opacity'>
         <div className='opacity-100 flex flex-col items-center justify-start w-auto h-auto bg-white shadow-default dark:border-strokedark dark:bg-boxdark rounded-xl'>
           <div className='m-5 w-full flex flex-col items-center'>
             <h1 className='text-lg opacity-100 text-white'>Select the timeframe</h1>
@@ -27,6 +30,7 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
             />
           </div>
           <Link
+            onClick={checkBoxEnablerTrigger}
             to="#"
             className="inline-flex items-center justify-center rounded-full bg-primary py-4 px-10 m-4 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
           >

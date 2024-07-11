@@ -126,6 +126,11 @@ interface Props {
     name: String;
 }
 
+const formTrigger = () => {
+    let box: HTMLDivElement = document.getElementById("checkbox-enabler");
+    box.classList.remove("hidden");
+}
+
 const MultiChart: React.FC<Props> = ({ name }) => {
     const [state, setState] = useState<ChartOneState>({
         series: [
@@ -161,7 +166,7 @@ const MultiChart: React.FC<Props> = ({ name }) => {
                         </div>
                     </div>
                 </div>
-                <div className="flex justify-end hover:bg-whiter">
+                <div onClick={formTrigger} className="flex justify-end hover:bg-whiter">
                     <div className="inline-flex items-center rounded-md bg-whiter p-1.5 dark:bg-meta-4">
                         <svg
                             className="cursor-pointer w-6 h-6 text-gray-800 dark:text-white"
