@@ -1,30 +1,37 @@
 import { useState } from "react";
+import { returnCorrectIcon } from "./gn-icons";
 interface datai {
     icon: number
-    block_number: number
-    channel: String
-    data_hash: String
-    block_hash: String
-    transactions: number
-    size: number
+    service_type: String
+    service_name: String
+    machine: String
+    ip_address: String
 }
 const data: datai[] = [
     {
         icon: 1,
-        block_number: 1,
-        block_hash: "hadihiahda",
-        data_hash: "naodaodhaoih",
-        channel: "channel1",
-        size: 1,
-        transactions: 2
+        service_type: "ClusterIP",
+        service_name: "orgx-peer1",
+        machine: "archlinux-machine",
+        ip_address: "178.77.20.10:30001"
+    },
+    {
+        icon: 2,
+        service_type: "NodePort",
+        service_name: "orgx-peer1",
+        machine: "archlinux-machine",
+        ip_address: "178.77.20.10:30001"
+    },
+    {
+        icon: 3,
+        service_type: "LoadBalancer",
+        service_name: "orgx-peer1",
+        machine: "archlinux-machine",
+        ip_address: "178.77.20.10:30001"
     }
 ]
-const icon1 = (<svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 6.5h2M11 18h2m-7-5v-2m12 2v-2M5 8h2a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1Zm0 12h2a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1Zm12 0h2a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1Zm0-12h2a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1Z" />
-</svg>
 
-)
-export const BlockExplorerBlocksList = () => {
+export const GeneralNetworkResourcesList = () => {
     const [pageSize, setPageSize] = useState(5);
     const [currentPage, setCurrentPage] = useState(0);
     const setPageAndUpdateQuery = (num: number) => {
@@ -37,7 +44,7 @@ export const BlockExplorerBlocksList = () => {
         <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
             <div className='flex flex-row w-full justify-between'>
                 <h4 className="mb-6 pt-5 w-10/12 text-xl font-semibold text-black dark:text-white">
-                    Blocks List
+                    Resources List
                 </h4>
                 <div className={currentPage == 0 || data.length != pageSize ? 'flex flex-row justify-between w-3/12 bg-gray-2 dark:bg-meta-4 rounded-xl mt-2 mb-2' : 'flex flex-row justify-between w-3/12 bg-gray-2 dark:bg-meta-4 rounded-xl m-2'}>
                     <div onClick={() => setPageAndUpdateQuery(5)} className={pageSize == 5 ? 'm-5 p-2 font-bold text-black bg-white cursor-pointer border' : 'm-5 p-2 font-bold cursor-pointer border'}>
@@ -86,42 +93,32 @@ export const BlockExplorerBlocksList = () => {
                 </div>
             </div>
             <div className="flex flex-col">
-                <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-6">
+                <div className="grid grid-cols-4 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-4">
                     <div className="p-2.5 xl:p-5">
                         <h5 className="text-sm font-medium uppercase xsm:text-base">
-                            Block Number
+                            Service Type
                         </h5>
                     </div>
                     <div className="p-2.5 text-center xl:p-5">
                         <h5 className="text-sm font-medium uppercase xsm:text-base">
-                            Channel
+                            Service Name
                         </h5>
                     </div>
                     <div className="hidden p-2.5 text-center sm:block xl:p-5">
                         <h5 className="text-sm font-medium uppercase xsm:text-base">
-                            Data Hash
+                            Machine
                         </h5>
                     </div>
                     <div className="hidden p-2.5 text-center sm:block xl:p-5">
                         <h5 className="text-sm font-medium uppercase xsm:text-base">
-                            Block Hash
-                        </h5>
-                    </div>
-                    <div className="hidden p-2.5 text-center sm:block xl:p-5">
-                        <h5 className="text-sm font-medium uppercase xsm:text-base">
-                            Transactions
-                        </h5>
-                    </div>
-                    <div className="hidden p-2.5 text-center sm:block xl:p-5">
-                        <h5 className="text-sm font-medium uppercase xsm:text-base">
-                            Size
+                            Ip Address
                         </h5>
                     </div>
                 </div>
 
                 {data.map((obj, key) => (
                     <div
-                        className={`grid grid-cols-3 sm:grid-cols-6 ${key === data.length - 1
+                        className={`grid grid-cols-4 sm:grid-cols-4 ${key === data.length - 1
                             ? ''
                             : 'border-b border-stroke dark:border-strokedark'
                             }`}
@@ -129,35 +126,23 @@ export const BlockExplorerBlocksList = () => {
                     >
                         <div className="flex items-center gap-3 p-2.5 xl:p-5">
                             <div className="flex-shrink-0">
-                                {icon1}
+                                {returnCorrectIcon(obj.icon)}
                             </div>
                             <p className="hidden text-black dark:text-white sm:block">
-                                {obj.block_number}
+                                {obj.service_type}
                             </p>
                         </div>
 
                         <div className="flex items-center justify-center p-2.5 xl:p-5">
-                            <p className="text-black dark:text-white">{obj.channel}</p>
+                            <p className="text-black dark:text-white">{obj.service_name}</p>
                         </div>
 
                         <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                            <p className="text-black dark:text-white">{obj.data_hash}</p>
+                            <p className="text-black dark:text-white">{obj.machine}</p>
                         </div>
 
                         <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                            <p className="text-black dark:text-white">{obj.block_hash}</p>
-                        </div>
-
-                        <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                            <p className="text-black dark:text-white">{obj.transactions}</p>
-                        </div>
-
-                        <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                            <p className="text-black dark:text-white">{obj.size}</p>
-                        </div>
-
-                        <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-
+                            <p className="text-black dark:text-white">{obj.ip_address}</p>
                         </div>
                     </div>
                 ))}

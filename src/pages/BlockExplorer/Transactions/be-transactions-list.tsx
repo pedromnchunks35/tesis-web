@@ -82,7 +82,7 @@ export const BlockExplorerTransactionsList = () => {
                 </div>
             </div>
             <div className="flex flex-col">
-                <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-7">
+                <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-6">
                     <div className="p-2.5 xl:p-5">
                         <h5 className="text-sm font-medium uppercase xsm:text-base">
                             Creator
@@ -113,16 +113,11 @@ export const BlockExplorerTransactionsList = () => {
                             Timestamp
                         </h5>
                     </div>
-                    <div className="hidden p-2.5 text-center sm:block xl:p-5">
-                        <h5 className="text-sm font-medium uppercase xsm:text-base">
-                            Info
-                        </h5>
-                    </div>
                 </div>
 
                 {data.map((obj, key) => (
                     <div
-                        className={`grid grid-cols-3 sm:grid-cols-7 ${key === data.length - 1
+                        className={`grid grid-cols-3 sm:grid-cols-6 ${key === data.length - 1
                             ? ''
                             : 'border-b border-stroke dark:border-strokedark'
                             }`}
