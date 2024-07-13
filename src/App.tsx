@@ -6,14 +6,9 @@ import PageTitle from './components/PageTitle';
 import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
 import Calendar from './pages/Calendar';
-import Chart from './pages/Chart';
 import FormElements from './pages/Form/FormElements';
-import FormLayout from './pages/Form/FormLayout';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
-import Tables from './pages/Tables';
-import Alerts from './pages/UiElements/Alerts';
-import Buttons from './pages/UiElements/Buttons';
 import DefaultLayout from './layout/DefaultLayout';
 import { Home } from './pages/Home/Home';
 import { GeneralNetworkDash } from './pages/GeneralNetwork/Dashboard/dashboard';
@@ -23,6 +18,25 @@ import { BlockExplorerBlocks } from './pages/BlockExplorer/Blocks/be-blocks';
 import { BlockExplorerTransactions } from './pages/BlockExplorer/Transactions/be-transactions';
 import { BlockExplorerChaincodes } from './pages/BlockExplorer/Chaincodes/be-chaincodes';
 import { BlockExplorerChannels } from './pages/BlockExplorer/Channels/be-channels';
+import { GeneralNetworkResources } from './pages/GeneralNetwork/Resources/gn-resources';
+import { GeneralNetworkNetworkVisualization } from './pages/GeneralNetwork/NetworkVisualization/gn-network-visualization';
+import { GeneralNetworkTreeConfig } from './pages/GeneralNetwork/TreeConfig/gn-treeconfig';
+import { GeneralNetworkMappingOfNodes } from './pages/GeneralNetwork/MappingOfNodes/gn-mapping-nodes';
+import { PeerConfigsUploadConfig } from './pages/PeerConfig/UploadConfigs/pc-upload-configs';
+import { PeerConfigQueryChannel } from './pages/PeerConfig/QueryChannel/pc-query-channel';
+import { PeerConfigFetchChannel } from './pages/PeerConfig/FetchChannel/pc-fetch-channel';
+import { PeerConfigJoinChannel } from './pages/PeerConfig/JoinChannel/pc-join-channel';
+import { PeerConfigInstallChaincode } from './pages/PeerConfig/InstallChaincode/pc-install-chaincode';
+import { PeerConfigQueryInstalledChaincode } from './pages/PeerConfig/QueryInstalledChaincode/pc-query-installed-chaincode';
+import { PeerConfigApproveChaincode } from './pages/PeerConfig/ApproveChaincode/pc-approve-chaincode';
+import { PeerConfigQueryChaincodeApprovals } from './pages/PeerConfig/QueryChaincodeApprovals/pc-query-chaincode-approvals';
+import { PeerConfigCommitChaincode } from './pages/PeerConfig/CommitChaincode/pc-commit-chaincode';
+import { PeerConfigInvokeChaincode } from './pages/PeerConfig/InvokeChaincode/pc-invoke-chaincode';
+import { PeerConfigCustomCommands } from './pages/PeerConfig/CustomCommands/pc-custom-commands';
+import { OrdererConfigCreatingChannel } from './pages/OrdererConfig/CreatingChannel/oc-creating-channel';
+import { OrdererConfigJoinChannel } from './pages/OrdererConfig/JoinChannel/oc-join-channel';
+import { OrdererConfigQueryChannels } from './pages/OrdererConfig/QueryChannels/oc-query-channels';
+import { OrdererConfigCustomCommands } from './pages/OrdererConfig/CustomCommands/oc-custom-commands';
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
@@ -53,8 +67,44 @@ function App() {
           path="/generalnetwork-dashboard"
           element={
             <>
-              <PageTitle title="General Network Dashbord" />
+              <PageTitle title="General Network Dashboard" />
               <GeneralNetworkDash />
+            </>
+          }
+        />
+        <Route
+          path="/generalnetwork-resources"
+          element={
+            <>
+              <PageTitle title="General Network Resources" />
+              <GeneralNetworkResources />
+            </>
+          }
+        />
+        <Route
+          path="/generalnetwork-network-visualization"
+          element={
+            <>
+              <PageTitle title="General Network, Network Visualization" />
+              <GeneralNetworkNetworkVisualization />
+            </>
+          }
+        />
+        <Route
+          path="/generalnetwork-tree-config"
+          element={
+            <>
+              <PageTitle title="General Network Tree Config" />
+              <GeneralNetworkTreeConfig />
+            </>
+          }
+        />
+        <Route
+          path="/generalnetwork-mapping-nodes"
+          element={
+            <>
+              <PageTitle title="General Network Mapping of Nodes" />
+              <GeneralNetworkMappingOfNodes />
             </>
           }
         />
@@ -62,7 +112,7 @@ function App() {
           path="/blockexplorer-dashboard"
           element={
             <>
-              <PageTitle title="General Network Dashabord" />
+              <PageTitle title="Block Explorer Network" />
               <BlockExplorerDashboard />
             </>
           }
@@ -113,6 +163,159 @@ function App() {
           }
         />
         <Route
+          path="/peer-config-upload-configs"
+          element={
+            <>
+              <PageTitle title="Peer Config Upload Configs" />
+              <PeerConfigsUploadConfig />
+            </>
+          }
+        />
+        <Route
+          path="/peer-config-query-channels"
+          element={
+            <>
+              <PageTitle title="Peer Config Query Channels" />
+              <PeerConfigQueryChannel />
+            </>
+          }
+        />
+        <Route
+          path="/peer-config-fetch-channel"
+          element={
+            <>
+              <PageTitle title="Peer Config Fetch Channel" />
+              <PeerConfigFetchChannel />
+            </>
+          }
+        />
+        <Route
+          path="/peer-config-query-channels"
+          element={
+            <>
+              <PageTitle title="Peer Config Query Channels" />
+              <PeerConfigQueryChannel />
+            </>
+          }
+        />
+        <Route
+          path="/peer-config-join-channel"
+          element={
+            <>
+              <PageTitle title="Peer Config Join Channel" />
+              <PeerConfigJoinChannel />
+            </>
+          }
+        />
+        <Route
+          path="/peer-config-install-chaincode"
+          element={
+            <>
+              <PageTitle title="Peer Config Install Chaincode" />
+              <PeerConfigInstallChaincode />
+            </>
+          }
+        />
+        <Route
+          path="/peer-config-query-installed-chaincode"
+          element={
+            <>
+              <PageTitle title="Peer Config Query Installed Chaincode" />
+              <PeerConfigQueryInstalledChaincode />
+            </>
+          }
+        />
+        <Route
+          path="/peer-config-approve-chaincode"
+          element={
+            <>
+              <PageTitle title="Peer Config Approve Chaincode" />
+              <PeerConfigApproveChaincode />
+            </>
+          }
+        />
+        <Route
+          path="/peer-config-query-approvals"
+          element={
+            <>
+              <PageTitle title="Peer Config Query Chaincode Approvals" />
+              <PeerConfigQueryChaincodeApprovals />
+            </>
+          }
+        />
+        <Route
+          path="/peer-config-commit-chaincode"
+          element={
+            <>
+              <PageTitle title="Peer Config Commit Chaincode" />
+              <PeerConfigCommitChaincode />
+            </>
+          }
+        />
+        <Route
+          path="/peer-config-invoke-chaincode"
+          element={
+            <>
+              <PageTitle title="Peer Config Invoke Chaincode" />
+              <PeerConfigInvokeChaincode />
+            </>
+          }
+        />
+        <Route
+          path="/peer-config-query-approvals"
+          element={
+            <>
+              <PageTitle title="Peer Config Query Chaincode Approvals" />
+              <PeerConfigQueryChaincodeApprovals />
+            </>
+          }
+        />
+        <Route
+          path="/peer-config-custom-commands"
+          element={
+            <>
+              <PageTitle title="Peer Config Custom Commands" />
+              <PeerConfigCustomCommands />
+            </>
+          }
+        />
+        <Route
+          path="/orderer-config-create-channels"
+          element={
+            <>
+              <PageTitle title="Orderer Config Create Channels" />
+              <OrdererConfigCreatingChannel />
+            </>
+          }
+        />
+        <Route
+          path="/orderer-config-join-channel"
+          element={
+            <>
+              <PageTitle title="Orderer Config Join Channel" />
+              <OrdererConfigJoinChannel />
+            </>
+          }
+        />
+        <Route
+          path="/orderer-config-query-channels"
+          element={
+            <>
+              <PageTitle title="Orderer Config Query Channels" />
+              <OrdererConfigQueryChannels />
+            </>
+          }
+        />
+        <Route
+          path="/orderer-config-custom-commands"
+          element={
+            <>
+              <PageTitle title="Orderer Config Custom Commands" />
+              <OrdererConfigCustomCommands />
+            </>
+          }
+        />
+        <Route
           path="/calendar"
           element={
             <>
@@ -131,7 +334,7 @@ function App() {
           }
         />
         <Route
-          path="blockexplorer"
+          path="/blockexplorer"
           element={
             <>
               <PageTitle title="Form Elements | TailAdmin - Tailwind CSS Admin Dashboard Template" />

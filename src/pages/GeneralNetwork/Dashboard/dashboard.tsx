@@ -1,8 +1,23 @@
 import CardDataStats from "../../../components/CardDataStats";
+import { K8NetworkSwitcher } from "../components/K8NetworkSwitcher";
 import MultiChart from "./multiChart";
 export const GeneralNetworkDash = () => {
     return (
         <>
+            <div className="pb-10">
+                <K8NetworkSwitcher title="Kubernetes Profile Name" total="CHP69-HOSPITAL" selector>
+                    <svg
+                        className="w-6 h-6 text-gray-800 dark:text-white"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        fill="currentColor"
+                        viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" d="M4 4a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2v14a1 1 0 1 1 0 2H5a1 1 0 1 1 0-2V5a1 1 0 0 1-1-1Zm5 2a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H9Zm5 0a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-1Zm-5 4a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1a1 1 0 0 0-1-1H9Zm5 0a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1a1 1 0 0 0-1-1h-1Zm-3 4a2 2 0 0 0-2 2v3h2v-3h2v3h2v-3a2 2 0 0 0-2-2h-2Z" clip-rule="evenodd" />
+                    </svg>
+                </K8NetworkSwitcher>
+            </div>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
                 <CardDataStats title="Number of Nodes" total="4">
                     <svg
@@ -62,7 +77,7 @@ export const GeneralNetworkDash = () => {
                 </div>
                 <div className="m-2"></div>
                 <div className="w-6/12 mt-8">
-                   <MultiChart name={"CPU Variation per Machine %"} /> 
+                    <MultiChart name={"CPU Variation per Machine %"} />
                 </div>
             </div>
             {/* DISK METRICS PER COMPONENT */}
@@ -72,7 +87,7 @@ export const GeneralNetworkDash = () => {
                 </div>
                 <div className="m-2"></div>
                 <div className="w-6/12 mt-8">
-                   <MultiChart name={"Disk usage per component %"} /> 
+                    <MultiChart name={"Disk usage per component %"} />
                 </div>
             </div>
             {/* DISK METRICS PER MACHINE */}
@@ -82,7 +97,7 @@ export const GeneralNetworkDash = () => {
                 </div>
                 <div className="m-2"></div>
                 <div className="w-6/12 mt-8">
-                   <MultiChart name={"Disk usage per machine %"} /> 
+                    <MultiChart name={"Disk usage per machine %"} />
                 </div>
             </div>
             {/* RAM MACHINES */}
@@ -92,7 +107,7 @@ export const GeneralNetworkDash = () => {
                 </div>
                 <div className="m-2"></div>
                 <div className="w-6/12 mt-8">
-                   <MultiChart name={"Ram per machine %"} /> 
+                    <MultiChart name={"Ram per machine %"} />
                 </div>
             </div>
             {/* RAM PER COMPONENT */}
@@ -102,7 +117,7 @@ export const GeneralNetworkDash = () => {
                 </div>
                 <div className="m-2"></div>
                 <div className="w-6/12 mt-8">
-                   <MultiChart name={"Ram per machine %"} /> 
+                    <MultiChart name={"Ram per machine %"} />
                 </div>
             </div>
         </>
