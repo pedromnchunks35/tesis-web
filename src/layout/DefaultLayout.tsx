@@ -5,16 +5,26 @@ import { Link } from 'react-router-dom';
 
 const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const checkBoxEnablerTrigger = () => {
-    let box: HTMLDivElement = document.getElementById("checkbox-enabler");
+  const disableTimeFrame = () => {
+    let box: HTMLElement = document.getElementById("checkbox-enabler");
     box.classList.add("hidden");
+    let timeframe: HTMLElement = document.getElementById("timeframe-enabler");
+    timeframe.classList.add("hidden");
   }
+  const disableResponse = () => {
+    let box: HTMLElement = document.getElementById("checkbox-enabler");
+    box.classList.add("hidden");
+    let response: HTMLElement = document.getElementById("response-enabler");
+    response.classList.add("hidden");
+  }
+
   return (
     <div className="dark:bg-boxdark-2 dark:text-bodydark relative">
       <div id='checkbox-enabler' className='hidden flex flex-row justify-center items-center w-screen h-screen bg-black absolute inset-0 z-9999 css-boundarie-opacity'>
-        <div className='opacity-100 flex flex-col items-center justify-start w-auto h-auto bg-white shadow-default dark:border-strokedark dark:bg-boxdark rounded-xl'>
+        {/** THIS IS THE FORM FOR THE TIME */}
+        <div id='timeframe-enabler' className='hidden opacity-100 flex flex-col items-center justify-start w-auto h-auto bg-white shadow-default dark:border-strokedark dark:bg-boxdark rounded-xl'>
           <div className='m-5 w-full flex flex-col items-center'>
-            <h1 className='text-lg opacity-100 text-white'>Select the timeframe</h1>
+            <h1 className='text-xl mt-5 font-semibold text-black dark:text-white'>Select the timeframe</h1>
             <div className='w-full border-b border-stroke pt-4 dark:border-strokedark min-w-80' />
           </div>
           <div className='p-2 w-full flex flex-col'>
@@ -30,12 +40,66 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
             />
           </div>
           <Link
-            onClick={checkBoxEnablerTrigger}
+            onClick={disableTimeFrame}
             to="#"
             className="inline-flex items-center justify-center rounded-full bg-primary py-4 px-10 m-4 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
           >
             Apply
           </Link>
+        </div>
+        {/** THIS IS THE RESPONSE OF MAKING CALLS TO A COMPONENT */}
+        <div id='response-enabler' className="hidden flex flex-col w-2/5 h-4/6 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+          <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
+            <h3 className="font-medium text-black dark:text-white">
+              Response
+            </h3>
+          </div>
+          <div className="flex flex-col overflow-y-scroll w-full h-4/6 gap-5.5 p-5">
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+          </div>
+          <div className='flex flex-row justify-center m-10'>
+            <Link
+              onClick={disableResponse}
+              to="#"
+              className="inline-flex items-center justify-center rounded-full bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+            >
+              Ok
+            </Link>
+          </div>
         </div>
       </div>
       {/* <!-- ===== Page Wrapper Start ===== --> */}

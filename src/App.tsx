@@ -5,8 +5,6 @@ import Loader from './common/Loader';
 import PageTitle from './components/PageTitle';
 import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
-import Calendar from './pages/Calendar';
-import FormElements from './pages/Form/FormElements';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import DefaultLayout from './layout/DefaultLayout';
@@ -316,15 +314,6 @@ function App() {
           }
         />
         <Route
-          path="/calendar"
-          element={
-            <>
-              <PageTitle title="Calendar | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Calendar />
-            </>
-          }
-        />
-        <Route
           path="/profile"
           element={
             <>
@@ -332,17 +321,7 @@ function App() {
               <Profile />
             </>
           }
-        />
-        <Route
-          path="/blockexplorer"
-          element={
-            <>
-              <PageTitle title="Form Elements | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <FormElements />
-            </>
-          }
-        />
-        <Route
+        />        <Route
           path="/settings"
           element={
             <>

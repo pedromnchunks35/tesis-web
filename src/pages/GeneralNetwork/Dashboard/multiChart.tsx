@@ -129,6 +129,8 @@ interface Props {
 const formTrigger = () => {
     let box: HTMLDivElement = document.getElementById("checkbox-enabler");
     box.classList.remove("hidden");
+    let timeframe: HTMLDivElement = document.getElementById("timeframe-enabler");
+    timeframe.classList.remove("hidden");
 }
 
 const MultiChart: React.FC<Props> = ({ name }) => {

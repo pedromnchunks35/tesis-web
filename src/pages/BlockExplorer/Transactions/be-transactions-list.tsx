@@ -151,10 +151,6 @@ export const BlockExplorerTransactionsList = () => {
                         <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
                             <p className="text-black dark:text-white">{obj.timestamp}</p>
                         </div>
-
-                        <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-
-                        </div>
                     </div>
                 ))}
             </div>

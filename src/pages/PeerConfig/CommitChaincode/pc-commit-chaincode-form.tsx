@@ -2,6 +2,12 @@ import { Link } from "react-router-dom";
 import { PeerConfigCommitChaincodeMulti } from "./pc-commit-chaincode-multi";
 
 export const PeerConfigChaincodeForm = () => {
+    const showResponse = () => {
+        let box: HTMLElement = document.getElementById("checkbox-enabler");
+        box.classList.remove("hidden");
+        let response: HTMLElement = document.getElementById("response-enabler");
+        response.classList.remove("hidden");
+    }
     return (
         <>
             <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -41,7 +47,7 @@ export const PeerConfigChaincodeForm = () => {
                             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                         />
                     </div>
-                    <PeerConfigCommitChaincodeMulti id="multi-selector"/>
+                    <PeerConfigCommitChaincodeMulti id="multi-selector" />
                     <div>
                         <label className="mb-3 block text-black dark:text-white">
                             Chaincode Version
@@ -75,6 +81,7 @@ export const PeerConfigChaincodeForm = () => {
                 </div>
                 <div className="flex flex-row justify-center m-5">
                     <Link
+                        onClick={showResponse}
                         to="#"
                         className="inline-flex items-center justify-center rounded-full bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
                     >
