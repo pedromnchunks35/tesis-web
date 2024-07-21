@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import DropdownDefault from './Dropdowns/DropdownDefault';
+import { DropDownDefault } from './Dropdown';
 
 interface CardDataStatsProps {
   title: string;
@@ -24,11 +24,11 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
         {children}
       </div>
       {selector ? <div className='absolute right-5 top-5'>
-        <DropdownDefault>
+        <DropDownDefault>
           <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m16 10 3-3m0 0-3-3m3 3H5v3m3 4-3 3m0 0 3 3m-3-3h14v-3" />
           </svg>
-        </DropdownDefault>
+        </DropDownDefault>
       </div> : <div />}
       <div className="mt-4 flex items-end justify-between">
         <div>
