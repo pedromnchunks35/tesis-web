@@ -1,22 +1,11 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
 interface Props {
+    some_list?: any;
+    set_channel?: any;
     children: ReactNode;
 }
 
-interface datai {
-    networkName: String
-}
-
-let data: datai[] = [
-    {
-        networkName: "CHP69-HOSPITAL"
-    },
-    {
-        networkName: "CHP70-HOSPITAL"
-    }
-]
-
-export const DropDownDefault: React.FC<Props> = ({ children }) => {
+export const DropDownDefault: React.FC<Props> = ({ children, some_list, set_channel }) => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
     const trigger = useRef<any>(null);
@@ -65,13 +54,19 @@ export const DropDownDefault: React.FC<Props> = ({ children }) => {
                     }`}
             >
                 {
-                    data.map((obj) => {
-                        return (
-                            <button className="flex w-full items-center gap-2 rounded-sm px-4 py-1.5 text-left text-sm hover:bg-gray dark:hover:bg-meta-4">
-                                {obj.networkName.length > 13 ? obj.networkName.substring(0, 13) + "..." : obj.networkName}
-                            </button>
-                        );
-                    })
+                    some_list ?
+                        some_list.map((network_name: any) => {
+                            return (
+                                <button onClick={() => {
+                                    set_channel(network_name.channelName);
+                                    setDropdownOpen(false);
+                                }} className="flex w-full items-center gap-2 rounded-sm px-4 py-1.5 text-left text-sm hover:bg-gray dark:hover:bg-meta-4">
+                                    {network_name.channelName.length > 13 ? network_name.channelName.substring(0, 13) + "..." : network_name.channelName}
+                                </button>
+                            );
+                        })
+                        :
+                        (<div />)
                 }
             </div>
         </div>

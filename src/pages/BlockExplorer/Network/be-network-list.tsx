@@ -1,28 +1,4 @@
-import { useState } from "react";
-interface datai {
-    icon: number
-    name: String
-    ip: String
-    type_component: String
-    msp: String
-    transactions: number
-    chaincodes: number
-    channels: number
-    alive: boolean
-}
-const data: datai[] = [
-    {
-        icon: 1,
-        name: "dep.x.peer1",
-        ip: "dep.x.peer1:80",
-        type_component: "peer",
-        msp: "orgx",
-        transactions: 2,
-        chaincodes: 3,
-        channels: 3,
-        alive: true
-    }
-]
+import React, { useState } from "react";
 const icon1 = (<svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
     <path d="M18 17h-.09c.058-.33.088-.665.09-1v-1h1a1 1 0 0 0 0-2h-1.09a5.97 5.97 0 0 0-.26-1H17a2 2 0 0 0 2-2V8a1 1 0 1 0-2 0v2h-.54a6.239 6.239 0 0 0-.46-.46V8a3.963 3.963 0 0 0-.986-2.6l.693-.693A1 1 0 0 0 16 4V3a1 1 0 1 0-2 0v.586l-.661.661a3.753 3.753 0 0 0-2.678 0L10 3.586V3a1 1 0 1 0-2 0v1a1 1 0 0 0 .293.707l.693.693A3.963 3.963 0 0 0 8 8v1.54a6.239 6.239 0 0 0-.46.46H7V8a1 1 0 0 0-2 0v2a2 2 0 0 0 2 2h-.65a5.97 5.97 0 0 0-.26 1H5a1 1 0 0 0 0 2h1v1a6 6 0 0 0 .09 1H6a2 2 0 0 0-2 2v2a1 1 0 1 0 2 0v-2h.812A6.012 6.012 0 0 0 11 21.907V12a1 1 0 0 1 2 0v9.907A6.011 6.011 0 0 0 17.188 19H18v2a1 1 0 0 0 2 0v-2a2 2 0 0 0-2-2Zm-4-8.65a5.922 5.922 0 0 0-.941-.251l-.111-.017a5.52 5.52 0 0 0-1.9 0l-.111.017A5.925 5.925 0 0 0 10 8.35V8a2 2 0 1 1 4 0v.35Z" />
 </svg>
@@ -33,9 +9,14 @@ const icon2 = (
     </svg>
 
 )
-export const BlockExplorerNetworkList = () => {
-    const [pageSize, setPageSize] = useState(5);
-    const [currentPage, setCurrentPage] = useState(0);
+interface Props {
+    list: any;
+    currentPage: any;
+    setCurrentPage: any;
+    pageSize: any;
+    setPageSize: any;
+}
+export const BlockExplorerNetworkList: React.FC<Props> = ({ list, currentPage, setCurrentPage, pageSize, setPageSize }) => {
     const setPageAndUpdateQuery = (num: number) => {
         setPageSize(num);
     }
@@ -48,7 +29,7 @@ export const BlockExplorerNetworkList = () => {
                 <h4 className="mb-6 pt-5 w-10/12 text-xl font-semibold text-black dark:text-white">
                     Components List
                 </h4>
-                <div className={currentPage == 0 || data.length != pageSize ? 'flex flex-row justify-between w-3/12 bg-gray-2 dark:bg-meta-4 rounded-xl mt-2 mb-2' : 'flex flex-row justify-between w-3/12 bg-gray-2 dark:bg-meta-4 rounded-xl m-2'}>
+                <div className={currentPage == 0 || list.length != pageSize ? 'flex flex-row justify-between w-3/12 bg-gray-2 dark:bg-meta-4 rounded-xl mt-2 mb-2' : 'flex flex-row justify-between w-3/12 bg-gray-2 dark:bg-meta-4 rounded-xl m-2'}>
                     <div onClick={() => setPageAndUpdateQuery(5)} className={pageSize == 5 ? 'm-5 p-2 font-bold text-black bg-white cursor-pointer border' : 'm-5 p-2 font-bold cursor-pointer border'}>
                         <h1>5</h1>
                     </div>
@@ -59,7 +40,7 @@ export const BlockExplorerNetworkList = () => {
                         <h1>15</h1>
                     </div>
                 </div>
-                <div className={data.length != pageSize ? 'hidden' : 'flex flex-row pt-9 pl-10'}>
+                <div className={list.length != pageSize ? 'hidden' : 'flex flex-row pt-9 pl-10'}>
                     {
                         currentPage != 0 ?
                             <svg
@@ -77,10 +58,10 @@ export const BlockExplorerNetworkList = () => {
                             <div />
                     }
                     {
-                        data.length == pageSize ?
+                        list.length == pageSize ?
                             <svg
                                 onClick={() => setCurrentPageAndUpdateQuery(currentPage + 1)}
-                                className={data.length == pageSize ? "cursor-pointer w-6 h-6 text-gray-800 dark:text-white" : "hidden"}
+                                className={list.length == pageSize ? "cursor-pointer w-6 h-6 text-gray-800 dark:text-white" : "hidden"}
                                 aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="24"
@@ -133,9 +114,9 @@ export const BlockExplorerNetworkList = () => {
                     </div>
                 </div>
 
-                {data.map((obj, key) => (
+                {list.map((obj: any, key: any) => (
                     <div
-                        className={`grid grid-cols-3 sm:grid-cols-7 ${key === data.length - 1
+                        className={`grid grid-cols-3 sm:grid-cols-7 ${key === list.length - 1
                             ? ''
                             : 'border-b border-stroke dark:border-strokedark'
                             }`}
@@ -151,11 +132,11 @@ export const BlockExplorerNetworkList = () => {
                         </div>
 
                         <div className="flex items-center justify-center p-2.5 xl:p-5">
-                            <p className="text-black dark:text-white">{obj.ip}</p>
+                            <p className="text-black dark:text-white">{obj.ipAddress}</p>
                         </div>
 
                         <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                            <p className="text-black dark:text-white">{obj.type_component}</p>
+                            <p className="text-black dark:text-white">{obj.typeComponent}</p>
                         </div>
 
                         <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
@@ -163,11 +144,11 @@ export const BlockExplorerNetworkList = () => {
                         </div>
 
                         <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                            <p className="text-black dark:text-white">{obj.transactions}</p>
+                            <p className="text-black dark:text-white">{obj.numberOfTransactions}</p>
                         </div>
 
                         <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                            <p className="text-black dark:text-white">{obj.chaincodes}</p>
+                            <p className="text-black dark:text-white">{obj.numberOfChaincodes}</p>
                         </div>
 
                         <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">

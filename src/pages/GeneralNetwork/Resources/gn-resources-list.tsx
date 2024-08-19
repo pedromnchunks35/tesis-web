@@ -1,39 +1,12 @@
-import { useState } from "react";
 import { returnCorrectIcon } from "./gn-icons";
-interface datai {
-    icon: number
-    service_type: String
-    service_name: String
-    machine: String
-    ip_address: String
+interface Props {
+    result: any;
+    pageSize: any;
+    currentPage: any;
+    setPageSize: any;
+    setCurrentPage: any;
 }
-const data: datai[] = [
-    {
-        icon: 1,
-        service_type: "ClusterIP",
-        service_name: "orgx-peer1",
-        machine: "archlinux-machine",
-        ip_address: "178.77.20.10:30001"
-    },
-    {
-        icon: 2,
-        service_type: "NodePort",
-        service_name: "orgx-peer1",
-        machine: "archlinux-machine",
-        ip_address: "178.77.20.10:30001"
-    },
-    {
-        icon: 3,
-        service_type: "LoadBalancer",
-        service_name: "orgx-peer1",
-        machine: "archlinux-machine",
-        ip_address: "178.77.20.10:30001"
-    }
-]
-
-export const GeneralNetworkResourcesList = () => {
-    const [pageSize, setPageSize] = useState(5);
-    const [currentPage, setCurrentPage] = useState(0);
+export const GeneralNetworkResourcesList: React.FC<Props> = ({ result, currentPage, pageSize, setCurrentPage, setPageSize }) => {
     const setPageAndUpdateQuery = (num: number) => {
         setPageSize(num);
     }
@@ -46,7 +19,7 @@ export const GeneralNetworkResourcesList = () => {
                 <h4 className="mb-6 pt-5 w-10/12 text-xl font-semibold text-black dark:text-white">
                     Resources List
                 </h4>
-                <div className={currentPage == 0 || data.length != pageSize ? 'flex flex-row justify-between w-3/12 bg-gray-2 dark:bg-meta-4 rounded-xl mt-2 mb-2' : 'flex flex-row justify-between w-3/12 bg-gray-2 dark:bg-meta-4 rounded-xl m-2'}>
+                <div className={currentPage == 0 || result.length != pageSize ? 'flex flex-row justify-between w-3/12 bg-gray-2 dark:bg-meta-4 rounded-xl mt-2 mb-2' : 'flex flex-row justify-between w-3/12 bg-gray-2 dark:bg-meta-4 rounded-xl m-2'}>
                     <div onClick={() => setPageAndUpdateQuery(5)} className={pageSize == 5 ? 'm-5 p-2 font-bold text-black bg-white cursor-pointer border' : 'm-5 p-2 font-bold cursor-pointer border'}>
                         <h1>5</h1>
                     </div>
@@ -57,7 +30,7 @@ export const GeneralNetworkResourcesList = () => {
                         <h1>15</h1>
                     </div>
                 </div>
-                <div className={data.length != pageSize ? 'hidden' : 'flex flex-row pt-9 pl-10'}>
+                <div className={result.length != pageSize ? 'hidden' : 'flex flex-row pt-9 pl-10'}>
                     {
                         currentPage != 0 ?
                             <svg
@@ -75,10 +48,10 @@ export const GeneralNetworkResourcesList = () => {
                             <div />
                     }
                     {
-                        data.length == pageSize ?
+                        result.length == pageSize ?
                             <svg
                                 onClick={() => setCurrentPageAndUpdateQuery(currentPage + 1)}
-                                className={data.length == pageSize ? "cursor-pointer w-6 h-6 text-gray-800 dark:text-white" : "hidden"}
+                                className={result.length == pageSize ? "cursor-pointer w-6 h-6 text-gray-800 dark:text-white" : "hidden"}
                                 aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="24"
@@ -106,7 +79,7 @@ export const GeneralNetworkResourcesList = () => {
                     </div>
                     <div className="hidden p-2.5 text-center sm:block xl:p-5">
                         <h5 className="text-sm font-medium uppercase xsm:text-base">
-                            Machine
+                            Service Type
                         </h5>
                     </div>
                     <div className="hidden p-2.5 text-center sm:block xl:p-5">
@@ -116,9 +89,9 @@ export const GeneralNetworkResourcesList = () => {
                     </div>
                 </div>
 
-                {data.map((obj, key) => (
+                {result.map((obj: any, key: any) => (
                     <div
-                        className={`grid grid-cols-4 sm:grid-cols-4 ${key === data.length - 1
+                        className={`grid grid-cols-4 sm:grid-cols-4 ${key === result.length - 1
                             ? ''
                             : 'border-b border-stroke dark:border-strokedark'
                             }`}
@@ -138,7 +111,7 @@ export const GeneralNetworkResourcesList = () => {
                         </div>
 
                         <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                            <p className="text-black dark:text-white">{obj.machine}</p>
+                            <p className="text-black dark:text-white">{obj.service_type}</p>
                         </div>
 
                         <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">

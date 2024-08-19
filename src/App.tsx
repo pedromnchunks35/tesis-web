@@ -38,6 +38,9 @@ import { OrdererConfigCustomCommands } from './pages/OrdererConfig/CustomCommand
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
+  //? SET TIME INTERVAL
+  const [startTimestamp, setStartTimestamp] = useState(0);
+  const [endTimestamp, setEndTimestamp] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -50,7 +53,7 @@ function App() {
   return loading ? (
     <Loader />
   ) : (
-    <DefaultLayout>
+    <DefaultLayout endTimestamp={endTimestamp} setEndTimestamp={setEndTimestamp} setStartTimestamp={setStartTimestamp} startTimestamp={startTimestamp}>
       <Routes>
         <Route
           index
@@ -66,7 +69,7 @@ function App() {
           element={
             <>
               <PageTitle title="General Network Dashboard" />
-              <GeneralNetworkDash />
+              <GeneralNetworkDash timestampEnd={endTimestamp} timestampStart={startTimestamp} />
             </>
           }
         />
@@ -111,7 +114,7 @@ function App() {
           element={
             <>
               <PageTitle title="Block Explorer Network" />
-              <BlockExplorerDashboard />
+              <BlockExplorerDashboard per_minute_end={endTimestamp} per_minute_start={startTimestamp} />
             </>
           }
         />

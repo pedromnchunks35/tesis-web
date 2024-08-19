@@ -1,11 +1,61 @@
+import { useEffect, useState } from "react";
 import CardDataStats from "../../../components/CardDataStats";
 import { BlockExplorerChannelsList } from "./be-channels-list";
+import { get_connection_details_quarkus } from "../../../utils/connectionProfiles/profiles";
+import { fetchData } from "../../../utils/connection/connection";
 
 export const BlockExplorerChannels = () => {
+    const [channel, set_current_channel] = useState('');
+    const [channel_list, set_channel_list] = useState<any[]>([]);
+    const [channels_list, set_channels_list] = useState<any[]>([]);
+    const [channels_size, set_channels_size] = useState(5);
+    const [channels_page, set_channels_page] = useState(0);
+    const fetchAll = async () => {
+        let connection_details = get_connection_details_quarkus();
+        //? FETCH CHANNELS LIST
+        let urls: any = [];
+        for (let i = 0; i < connection_details.urls.length; i++) {
+            const element = connection_details.urls[i];
+            urls[i] = element +
+                ":" +
+                connection_details.port +
+                "/" +
+                "channel";
+        }
+        let channels_req = await fetchData(
+            urls
+        );
+        //? RETRIEVE FIRST CHANNEL
+        if (channels_req.length != 0) {
+            set_current_channel(channels_req[0].channelName);
+        }
+
+        //? CHANNELS LIST
+        urls = [];
+        for (let i = 0; i < connection_details.urls.length; i++) {
+            const element = connection_details.urls[i];
+            urls[i] = element +
+                ":" +
+                connection_details.port +
+                "/" +
+                "channel/" +
+                channels_page +
+                "/" +
+                channels_size
+        }
+        let channels_list_req = await fetchData(
+            urls
+        );
+        set_channels_list(channels_list_req);
+        console.log(channels_list_req);
+    }
+    useEffect(() => {
+        fetchAll();
+    }, [channels_size, channels_page, channel]);
     return (
         <>
             <div className="pb-10">
-                <CardDataStats title="Channel" total="channel1" selector>
+                <CardDataStats title="Channel" total={channel} set_channel={set_current_channel} some_list={channel_list} selector>
                     <svg
                         className="w-6 h-6 text-gray-800 dark:text-white"
                         aria-hidden="true"
@@ -18,7 +68,7 @@ export const BlockExplorerChannels = () => {
                     </svg>
                 </CardDataStats>
             </div>
-            <BlockExplorerChannelsList/>
+            <BlockExplorerChannelsList currentPage={channels_page} pageSize={channels_size} result={channels_list} setCurrentPage={set_channels_page} setPageSize={set_channels_size} />
         </>
     );
 }

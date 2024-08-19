@@ -1,0 +1,47 @@
+version: v2beta1
+name: tesis-webgit
+
+# This is a list of `deployments` that DevSpace can create for this project
+deployments:
+  app:
+    # This deployment uses `kubectl` but you can also define `helm` deployments
+    kubectl:
+      manifests:
+        - /run/media/pedromn35/disk2-home/projects/hospital-installation-kubernetes/Benchmarking/kubernetes-network/kuber-components/hlf-network-ui
+
+# This is a list of `dev` containers that are based on the containers created by your deployments
+dev:
+  app:
+    # Search for the container that runs this image
+    labelSelector:
+      deployment: hlf-network-ui
+    # Sync files between the local filesystem and the development container
+    sync:
+      - path: ./:/app
+        uploadExcludePaths:
+          - node_modules
+    # Open a terminal and use the following command to start it
+    terminal:
+      command: /app/devspace_start.sh
+    # Inject a lightweight SSH server into the container (so your IDE can connect to the remote dev env)
+    ssh:
+      enabled: true
+    # Make the following commands from my local machine available inside the dev container
+    proxyCommands:
+      - command: devspace
+      - command: kubectl
+      - command: helm
+      - gitCredentials: true
+    # Forward the following ports to be able access your application via localhost
+    ports:
+      - port: "5173"
+    # Open the following URLs once they return an HTTP status code other than 502 or 503
+    open:
+      - url: http://localhost:5173
+# Define dependencies to other projects with a devspace.yaml
+# dependencies:
+#   api:
+#     git: https://...  # Git-based dependencies
+#     tag: v1.0.0
+#   ui:
+#     path: ./ui        # Path-based dependencies (for monorepos)

@@ -1,11 +1,11 @@
-import { useState } from "react";
-interface datai {
+import React, { useState } from "react";
+interface resulti {
     chaincode_name: String,
     channel: String,
     transactions: number,
     version: String
 }
-const data: datai[] = [
+const result: resulti[] = [
     {
         chaincode_name: "basic",
         channel: "channel1",
@@ -18,9 +18,15 @@ const icon1 = (<svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidde
     <path fill-rule="evenodd" d="M3 9a2 2 0 0 1 2-2h4.157a2 2 0 0 1 1.656.879L12.249 10H3V9Zm0 3v7a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-7H3Z" clip-rule="evenodd" />
 </svg>
 )
-export const BlockExplorerChaincodesList = () => {
-    const [pageSize, setPageSize] = useState(5);
-    const [currentPage, setCurrentPage] = useState(0);
+
+interface Props {
+    result: any;
+    pageSize: any;
+    setPageSize: any;
+    currentPage: any;
+    setCurrentPage: any;
+}
+export const BlockExplorerChaincodesList: React.FC<Props> = ({ result, pageSize, setPageSize, currentPage, setCurrentPage }) => {
     const setPageAndUpdateQuery = (num: number) => {
         setPageSize(num);
     }
@@ -33,7 +39,7 @@ export const BlockExplorerChaincodesList = () => {
                 <h4 className="mb-6 pt-5 w-10/12 text-xl font-semibold text-black dark:text-white">
                     Chaincodes List
                 </h4>
-                <div className={currentPage == 0 || data.length != pageSize ? 'flex flex-row justify-between w-3/12 bg-gray-2 dark:bg-meta-4 rounded-xl mt-2 mb-2' : 'flex flex-row justify-between w-3/12 bg-gray-2 dark:bg-meta-4 rounded-xl m-2'}>
+                <div className={currentPage == 0 || result.length != pageSize ? 'flex flex-row justify-between w-3/12 bg-gray-2 dark:bg-meta-4 rounded-xl mt-2 mb-2' : 'flex flex-row justify-between w-3/12 bg-gray-2 dark:bg-meta-4 rounded-xl m-2'}>
                     <div onClick={() => setPageAndUpdateQuery(5)} className={pageSize == 5 ? 'm-5 p-2 font-bold text-black bg-white cursor-pointer border' : 'm-5 p-2 font-bold cursor-pointer border'}>
                         <h1>5</h1>
                     </div>
@@ -44,7 +50,7 @@ export const BlockExplorerChaincodesList = () => {
                         <h1>15</h1>
                     </div>
                 </div>
-                <div className={data.length != pageSize ? 'hidden' : 'flex flex-row pt-9 pl-10'}>
+                <div className={result.length != pageSize ? 'hidden' : 'flex flex-row pt-9 pl-10'}>
                     {
                         currentPage != 0 ?
                             <svg
@@ -62,10 +68,10 @@ export const BlockExplorerChaincodesList = () => {
                             <div />
                     }
                     {
-                        data.length == pageSize ?
+                        result.length == pageSize ?
                             <svg
                                 onClick={() => setCurrentPageAndUpdateQuery(currentPage + 1)}
-                                className={data.length == pageSize ? "cursor-pointer w-6 h-6 text-gray-800 dark:text-white" : "hidden"}
+                                className={result.length == pageSize ? "cursor-pointer w-6 h-6 text-gray-800 dark:text-white" : "hidden"}
                                 aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="24"
@@ -103,9 +109,9 @@ export const BlockExplorerChaincodesList = () => {
                     </div>
                 </div>
 
-                {data.map((obj, key) => (
+                {result.map((obj: any, key: any) => (
                     <div
-                        className={`grid grid-cols-3 sm:grid-cols-4 ${key === data.length - 1
+                        className={`grid grid-cols-3 sm:grid-cols-4 ${key === result.length - 1
                             ? ''
                             : 'border-b border-stroke dark:border-strokedark'
                             }`}
@@ -116,16 +122,16 @@ export const BlockExplorerChaincodesList = () => {
                                 {icon1}
                             </div>
                             <p className="hidden text-black dark:text-white sm:block">
-                                {obj.chaincode_name}
+                                {obj.chaincodeName}
                             </p>
                         </div>
 
                         <div className="flex items-center justify-center p-2.5 xl:p-5">
-                            <p className="text-black dark:text-white">{obj.channel}</p>
+                            <p className="text-black dark:text-white">{obj.channelName}</p>
                         </div>
 
                         <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                            <p className="text-black dark:text-white">{obj.transactions}</p>
+                            <p className="text-black dark:text-white">{obj.numberOfTransactions}</p>
                         </div>
 
                         <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">

@@ -1,12 +1,9 @@
 import { Link } from "react-router-dom"
+interface Props {
+    uploadFile: any;
+}
+export const PeerConfigUploadForm: React.FC<Props> = ({ uploadFile }) => {
 
-export const PeerConfigUploadForm = () => {
-    const showResponse = () => {
-        let box: HTMLElement = document.getElementById("checkbox-enabler");
-        box.classList.remove("hidden");
-        let response: HTMLElement = document.getElementById("response-enabler");
-        response.classList.remove("hidden");
-    }
     return (
         <>
             {/* <!-- File upload --> */}
@@ -22,6 +19,7 @@ export const PeerConfigUploadForm = () => {
                             Attach file
                         </label>
                         <input
+                            id="peer_chaincode_form_file"
                             type="file"
                             className="w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
                         />
@@ -30,7 +28,7 @@ export const PeerConfigUploadForm = () => {
                     <div>
                         <div className="flex flex-row justify-center">
                             <Link
-                                onClick={showResponse}
+                                onClick={uploadFile}
                                 to="#"
                                 className="inline-flex items-center justify-center rounded-full bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
                             >

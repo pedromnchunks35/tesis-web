@@ -1,14 +1,196 @@
+import { useEffect, useState } from "react";
 import CardDataStats from "../../../components/CardDataStats"
-import MultiChart from "../../GeneralNetwork/Dashboard/multiChart";
 import { BlockExplorerBlockList } from "./be-blocklist";
 import { CircularBeDashboard } from "./circular-dash";
 import { PeerList } from "./peer-list";
+import { fetchData } from "../../../utils/connection/connection";
+import { get_connection_details_quarkus } from "../../../utils/connectionProfiles/profiles";
+interface Props {
+    per_minute_start: any;
+    per_minute_end: any;
+}
+const BlockExplorerDashboard: React.FC<Props> = ({ per_minute_end, per_minute_start }) => {
+    //? PUT HERE ALL OF THE DATA NEEDED
+    const [channel, set_current_channel] = useState('');
 
-const BlockExplorerDashboard = () => {
+    const [channel_list, set_channel_list] = useState<any[]>([]);
+
+    const [number_of_blocks, set_number_of_blocks] = useState(0);
+
+    const [number_of_transactions, set_number_of_transactions] = useState(0);
+
+    const [number_of_nodes, set_number_of_nodes] = useState(0);
+
+    const [number_of_chaincodes, set_number_of_chaincodes] = useState(0);
+
+    const [peer_list, set_peer_list] = useState([]);
+    const [peer_list_page, set_peer_list_page] = useState(0);
+    const [peer_list_number_of_elements, peer_list_set_number_of_elements] = useState(5);
+
+    /*    const [blocks_per_minute, set_blocks_per_minute] = useState<any[]>([]);
+       const [transactions_per_minute, set_transactions_per_minute] = useState<any[]>([]); */
+
+
+    const [transactions_per_organization, set_transactions_per_organization] = useState([]);
+
+    const [blocks_tree, set_blocks_tree] = useState([]);
+    const [blocks_tree_couter, set_blocks_tree_counter] = useState(20);
+
+    const fetchAll = async (): Promise<void> => {
+        try {
+            let connection_details = get_connection_details_quarkus();
+
+            //? FETCH CHANNELS LIST
+            let urls: any = [];
+            for (let i = 0; i < connection_details.urls.length; i++) {
+                const element = connection_details.urls[i];
+                urls[i] = element +
+                    ":" +
+                    connection_details.port +
+                    "/" +
+                    "channel";
+            }
+            let channels_req = await fetchData(
+                urls
+            );
+            //? RETRIEVE FIRST CHANNEL
+            if (channels_req.length != 0) {
+                set_current_channel(channels_req[0].channelName);
+            }
+
+            set_channel_list(channels_req);
+
+            //? FETCH NUMBER OF BLOCKS
+            urls = [];
+            for (let i = 0; i < connection_details.urls.length; i++) {
+                const element = connection_details.urls[i];
+                urls[i] = element +
+                    ":" +
+                    connection_details.port +
+                    "/" +
+                    "block/" +
+                    "totalOfBlocks"
+            }
+            let number_of_blocks_req = await fetchData(
+                urls
+            );
+            set_number_of_blocks(number_of_blocks_req);
+
+            //? FETCH NUMBER OF TRANSACTIONS
+            urls = [];
+            for (let i = 0; i < connection_details.urls.length; i++) {
+                const element = connection_details.urls[i];
+                urls[i] = element +
+                    ":" +
+                    connection_details.port +
+                    "/" +
+                    "transaction/" +
+                    "numberOfTransactions"
+            }
+            let number_of_transactions_req = await fetchData(
+                urls
+            );
+            set_number_of_transactions(number_of_transactions_req);
+
+            //? FETCH NUMBER OF NODES
+            urls = [];
+            for (let i = 0; i < connection_details.urls.length; i++) {
+                const element = connection_details.urls[i];
+                urls[i] = element +
+                    ":" +
+                    connection_details.port +
+                    "/" +
+                    "network/" +
+                    "nodes"
+            }
+            let number_of_nodes = await fetchData(
+                urls
+            );
+            set_number_of_nodes(number_of_nodes);
+
+            //? NUMBER OF CHAINCODES
+            urls = [];
+            for (let i = 0; i < connection_details.urls.length; i++) {
+                const element = connection_details.urls[i];
+                urls[i] = element +
+                    ":" +
+                    connection_details.port +
+                    "/" +
+                    "Chaincode/" +
+                    "numberOfChaincodes"
+            }
+            let number_of_chaincodes_req = await fetchData(
+                urls
+            );
+            set_number_of_chaincodes(number_of_chaincodes_req);
+
+            //? FETCH PEER LIST
+            urls = [];
+            for (let i = 0; i < connection_details.urls.length; i++) {
+                const element = connection_details.urls[i];
+                urls[i] = element +
+                    ":" +
+                    connection_details.port +
+                    "/" +
+                    "network/" +
+                    "peerComps/" +
+                    peer_list_page +
+                    "/" +
+                    peer_list_number_of_elements
+            }
+            let peer_list = await fetchData(
+                urls
+            );
+            set_peer_list(peer_list);
+
+            //? FETCH TRANSACTIONS PER ORGANIZATION
+            urls = [];
+            for (let i = 0; i < connection_details.urls.length; i++) {
+                const element = connection_details.urls[i];
+                urls[i] = element +
+                    ":" +
+                    connection_details.port +
+                    "/" +
+                    "transaction/" +
+                    "transactionsPerOrganization"
+            }
+            let transactions_per_organization_req = await fetchData(
+                urls
+            );
+            set_transactions_per_organization(transactions_per_organization_req);
+
+            //? FETCH BLOCKS TREE
+            urls = [];
+            for (let i = 0; i < connection_details.urls.length; i++) {
+                const element = connection_details.urls[i];
+                urls[i] = element +
+                    ":" +
+                    connection_details.port +
+                    "/" +
+                    "block/" +
+                    "getBlocks/" +
+                    "tree/" +
+                    "0/" +
+                    blocks_tree_couter
+            }
+            let block_list_tree_req = await fetchData(
+                urls
+            );
+            set_blocks_tree(block_list_tree_req);
+        } catch (error) {
+            console.log("Error in one of the requests " + error);
+        }
+    }
+
+    useEffect(() => {
+        fetchAll();
+    }, [
+        channel, peer_list_page, peer_list_number_of_elements, per_minute_start, per_minute_end, blocks_tree_couter
+    ]);
     return (
         <>
             <div className="pb-10">
-                <CardDataStats title="Channel" total="channel1" selector>
+                <CardDataStats title="Channel" total={channel} set_channel={set_current_channel} some_list={channel_list} selector>
                     <svg
                         className="w-6 h-6 text-gray-800 dark:text-white"
                         aria-hidden="true"
@@ -22,7 +204,7 @@ const BlockExplorerDashboard = () => {
                 </CardDataStats>
             </div>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
-                <CardDataStats title="Blocks" total="12">
+                <CardDataStats title="Blocks" total={number_of_blocks.toString()}>
                     <svg
                         className="w-6 h-6 text-gray-800 dark:text-white"
                         aria-hidden="true"
@@ -36,14 +218,14 @@ const BlockExplorerDashboard = () => {
                     </svg>
 
                 </CardDataStats>
-                <CardDataStats title="Transactions" total="2">
+                <CardDataStats title="Transactions" total={number_of_transactions.toString()}>
                     <svg
                         className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                         <path fill-rule="evenodd" d="M5.617 2.076a1 1 0 0 1 1.09.217L8 3.586l1.293-1.293a1 1 0 0 1 1.414 0L12 3.586l1.293-1.293a1 1 0 0 1 1.414 0L16 3.586l1.293-1.293A1 1 0 0 1 19 3v18a1 1 0 0 1-1.707.707L16 20.414l-1.293 1.293a1 1 0 0 1-1.414 0L12 20.414l-1.293 1.293a1 1 0 0 1-1.414 0L8 20.414l-1.293 1.293A1 1 0 0 1 5 21V3a1 1 0 0 1 .617-.924ZM9 7a1 1 0 0 0 0 2h6a1 1 0 1 0 0-2H9Zm0 4a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2H9Zm0 4a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2H9Z" clip-rule="evenodd" />
                     </svg>
 
                 </CardDataStats>
-                <CardDataStats title="Nodes" total="1">
+                <CardDataStats title="Nodes" total={number_of_nodes.toString()}>
                     <svg
                         className="w-6 h-6 text-gray-800 dark:text-white"
                         aria-hidden="true"
@@ -55,7 +237,7 @@ const BlockExplorerDashboard = () => {
                         <path d="M17.5 3a3.5 3.5 0 0 0-3.456 4.06L8.143 9.704a3.5 3.5 0 1 0-.01 4.6l5.91 2.65a3.5 3.5 0 1 0 .863-1.805l-5.94-2.662a3.53 3.53 0 0 0 .002-.961l5.948-2.667A3.5 3.5 0 1 0 17.5 3Z" />
                     </svg>
                 </CardDataStats>
-                <CardDataStats title="Chaincodes" total="3">
+                <CardDataStats title="Chaincodes" total={number_of_chaincodes.toString()}>
                     <svg
                         className="w-6 h-6 text-gray-800 dark:text-white"
                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -69,16 +251,16 @@ const BlockExplorerDashboard = () => {
                 </CardDataStats>
             </div>
             <div className="pt-10">
-                <PeerList />
+                <PeerList peer_list_number_of_elements={peer_list_number_of_elements} peer_list_page={peer_list_page} set_peer_list_number_of_elements={peer_list_set_number_of_elements} set_peer_list_page={set_peer_list_page} result={peer_list} />
+            </div>
+            {/* <div className="pt-10">
+                <MultiChart name={"Block & Tx Statistics"} categories={undefined} data={undefined} />
+            </div> */}
+            <div className="pt-10">
+                <CircularBeDashboard result={transactions_per_organization} />
             </div>
             <div className="pt-10">
-                <MultiChart name={"Block & Tx Statistics"} />
-            </div>
-            <div className="pt-10">
-                <CircularBeDashboard />
-            </div>
-            <div className="pt-10">
-                <BlockExplorerBlockList />
+                <BlockExplorerBlockList block={blocks_tree} counter={blocks_tree_couter} setCounter={set_blocks_tree_counter} />
             </div>
         </>
 

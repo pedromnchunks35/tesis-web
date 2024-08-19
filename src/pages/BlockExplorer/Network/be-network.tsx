@@ -1,11 +1,70 @@
+import { useEffect, useState } from "react";
 import CardDataStats from "../../../components/CardDataStats";
 import { BlockExplorerNetworkList } from "./be-network-list";
+import { get_connection_details_quarkus } from "../../../utils/connectionProfiles/profiles";
+import { fetchData } from "../../../utils/connection/connection";
 
 export const BlockExplorerNetwork = () => {
+    const [components_list, set_components_list] = useState<any[]>([]);
+    const [components_list_number_elements, set_components_list_number_elements] = useState(5);
+    const [components_list_page, set_components_list_page] = useState(0);
+    const [channel, set_current_channel] = useState('');
+    const [channel_list, set_channel_list] = useState<any[]>([]);
+    const fetchAll = async () => {
+        let connection_details = get_connection_details_quarkus();
+        //? FETCH CHANNELS LIST
+        let urls: any = [];
+        for (let i = 0; i < connection_details.urls.length; i++) {
+            const element = connection_details.urls[i];
+            urls[i] = element +
+                ":" +
+                connection_details.port +
+                "/" +
+                "channel";
+        }
+        let channels_req = await fetchData(
+            urls
+        );
+        //? RETRIEVE FIRST CHANNEL
+        if (channels_req.length != 0) {
+            set_current_channel(channels_req[0].channelName);
+        }
+
+        set_channel_list(channels_req);
+
+        //? Fetch components
+        urls = [];
+        for (let i = 0; i < connection_details.urls.length; i++) {
+            const element = connection_details.urls[i];
+            urls[i] = element +
+                ":" +
+                connection_details.port +
+                "/" +
+                "network/" +
+                components_list_page +
+                "/" +
+                components_list_page
+        }
+        let components_list_req = await fetchData(
+            urls
+        );
+        //? PUT CORRECT ICON
+        for (let i = 0; i < components_list_req.length; i++) {
+            if (components_list_req[i].isAlive) {
+                components_list_req[i].icon = 1;
+            } else {
+                components_list_req[i].icon = 2;
+            }
+        }
+        set_components_list(components_list_req);
+    }
+    useEffect(() => {
+        fetchAll();
+    }, [components_list_number_elements, components_list_page, channel]);
     return (
         <>
-        <div className="pb-10">
-                <CardDataStats title="Channel" total="channel1" selector>
+            <div className="pb-10">
+                <CardDataStats title="Channel" total={channel} set_channel={set_current_channel} some_list={channel_list} selector>
                     <svg
                         className="w-6 h-6 text-gray-800 dark:text-white"
                         aria-hidden="true"
@@ -18,7 +77,7 @@ export const BlockExplorerNetwork = () => {
                     </svg>
                 </CardDataStats>
             </div>
-        <BlockExplorerNetworkList/>
+            <BlockExplorerNetworkList currentPage={components_list_page} list={components_list} pageSize={components_list_number_elements} setCurrentPage={set_components_list_page} setPageSize={set_components_list_number_elements} />
         </>
     );
 }

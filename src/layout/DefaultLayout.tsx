@@ -3,9 +3,31 @@ import Header from '../components/Header/index';
 import Sidebar from '../components/Sidebar/index';
 import { Link } from 'react-router-dom';
 
-const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
+interface Props {
+  children: ReactNode,
+  startTimestamp: any;
+  endTimestamp: any;
+  setStartTimestamp: any;
+  setEndTimestamp: any;
+}
+
+function isInteger(str: string): boolean {
+  const parsed = parseInt(str, 10);
+  return !isNaN(parsed) && parsed.toString() === str;
+}
+
+const DefaultLayout: React.FC<Props> = ({ children, endTimestamp, setEndTimestamp, setStartTimestamp, startTimestamp }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const disableTimeFrame = () => {
+    let input_start: HTMLInputElement = document.getElementById("startTimestampInput");
+    let input_end: HTMLInputElement = document.getElementById("endTimestampInput");
+    if (isInteger(input_start.value) && isInteger(input_end.value) && Number(input_start.value) < Number(input_end.value)) {
+      setStartTimestamp(input_start.value);
+      setEndTimestamp(input_end.value);
+    } else {
+      input_start.value = startTimestamp;
+      input_end.value = endTimestamp;
+    }
     let box: HTMLElement = document.getElementById("checkbox-enabler");
     box.classList.add("hidden");
     let timeframe: HTMLElement = document.getElementById("timeframe-enabler");
@@ -17,7 +39,6 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
     let response: HTMLElement = document.getElementById("response-enabler");
     response.classList.add("hidden");
   }
-
   return (
     <div className="dark:bg-boxdark-2 dark:text-bodydark relative">
       <div id='checkbox-enabler' className='hidden flex flex-row justify-center items-center w-screen h-screen bg-black absolute inset-0 z-9999 css-boundarie-opacity'>
@@ -29,12 +50,16 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
           </div>
           <div className='p-2 w-full flex flex-col'>
             <input
-              type="text"
+              id='startTimestampInput'
+              type="number"
+              defaultValue={startTimestamp}
               placeholder="Init"
               className="w-full rounded-lg border-[1.5px] border-primary bg-transparent py-2 px-5 m-full mb-6 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:text-white"
             />
             <input
-              type="text"
+              id='endTimestampInput'
+              defaultValue={endTimestamp}
+              type="number"
               placeholder="End"
               className="w-full rounded-lg border-[1.5px] border-primary bg-transparent py-2 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:bg-form-input dark:text-white"
             />
@@ -55,41 +80,7 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
             </h3>
           </div>
           <div className="flex flex-col overflow-y-scroll w-full h-4/6 gap-5.5 p-5">
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
-            aohaohsoiahdsiohaoidhaiodhioahdiohadiohaiodhioahioshioahsiohaioshioahsiohio
+           <p id='content-to-display'></p>
           </div>
           <div className='flex flex-row justify-center m-10'>
             <Link

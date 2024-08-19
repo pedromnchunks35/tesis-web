@@ -1,11 +1,59 @@
+import { useEffect, useState } from "react";
 import CardDataStats from "../../../components/CardDataStats";
 import { BlockExplorerChaincodesList } from "./be-chaincodes-list";
+import { get_connection_details_quarkus } from "../../../utils/connectionProfiles/profiles";
+import { fetchData } from "../../../utils/connection/connection";
 
 export const BlockExplorerChaincodes = () => {
+    const [channel, set_current_channel] = useState('');
+    const [channel_list, set_channel_list] = useState<any[]>([]);
+    const [chaincodes_list, set_chaincodes_list] = useState<any[]>([]);
+    const [chaincode_size, set_chaincode_size] = useState(5);
+    const [chaincode_page, set_chaincode_page] = useState(0);
+    const fetchAll = async () => {
+        let connection_details = get_connection_details_quarkus();
+        //? FETCH CHANNELS LIST
+        let urls: any = [];
+        for (let i = 0; i < connection_details.urls.length; i++) {
+            const element = connection_details.urls[i];
+            urls[i] = element +
+                ":" +
+                connection_details.port +
+                "/" +
+                "channel";
+        }
+        let channels_req = await fetchData(
+            urls
+        );
+        //? RETRIEVE FIRST CHANNEL
+        if (channels_req.length != 0) {
+            set_current_channel(channels_req[0].channelName);
+        }
+
+        set_channel_list(channels_req);
+
+        urls = [];
+        for (let i = 0; i < connection_details.urls.length; i++) {
+            const element = connection_details.urls[i];
+            urls[i] = element +
+                ":" +
+                connection_details.port +
+                "/" +
+                "Chaincode/"
+        }
+        let chaincode_list_req = await fetchData(
+            urls
+        );
+
+        set_chaincodes_list(chaincode_list_req);
+    }
+    useEffect(() => {
+        fetchAll();
+    }, [chaincode_size, chaincode_page, channel]);
     return (
         <>
             <div className="pb-10">
-                <CardDataStats title="Channel" total="channel1" selector>
+                <CardDataStats title="Channel" total={channel} set_channel={set_channel_list} some_list={channel_list} selector>
                     <svg
                         className="w-6 h-6 text-gray-800 dark:text-white"
                         aria-hidden="true"
@@ -18,7 +66,7 @@ export const BlockExplorerChaincodes = () => {
                     </svg>
                 </CardDataStats>
             </div>
-            <BlockExplorerChaincodesList />
+            <BlockExplorerChaincodesList currentPage={chaincode_page} pageSize={chaincode_size} result={chaincodes_list} setCurrentPage={set_chaincode_page} setPageSize={set_chaincode_size} />
         </>
     );
 }

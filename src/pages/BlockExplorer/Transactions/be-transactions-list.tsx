@@ -1,28 +1,15 @@
-import { useState } from "react";
-interface datai {
-    creator: String
-    channel: String
-    tx_id: String
-    type: String
-    chaincode: String
-    timestamp: String
-}
-const data: datai[] = [
-    {
-        creator: "orgxMSP",
-        channel: "channel1",
-        tx_id: "aodhjaoihdioahd",
-        type: "endorse",
-        chaincode: "basic",
-        timestamp: "2023..."
-    }
-]
 const icon1 = (<svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 6H5m2 3H5m2 3H5m2 3H5m2 3H5m11-1a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2M7 3h11a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Zm8 7a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z" />
 </svg>);
-export const BlockExplorerTransactionsList = () => {
-    const [pageSize, setPageSize] = useState(5);
-    const [currentPage, setCurrentPage] = useState(0);
+
+interface Props {
+    list: any;
+    pageSize: any;
+    setPageSize: any;
+    currentPage: any;
+    setCurrentPage: any;
+}
+export const BlockExplorerTransactionsList: React.FC<Props> = ({ currentPage, list, pageSize, setCurrentPage, setPageSize }) => {
     const setPageAndUpdateQuery = (num: number) => {
         setPageSize(num);
     }
@@ -35,7 +22,7 @@ export const BlockExplorerTransactionsList = () => {
                 <h4 className="mb-6 pt-5 w-10/12 text-xl font-semibold text-black dark:text-white">
                     Transactions List
                 </h4>
-                <div className={currentPage == 0 || data.length != pageSize ? 'flex flex-row justify-between w-3/12 bg-gray-2 dark:bg-meta-4 rounded-xl mt-2 mb-2' : 'flex flex-row justify-between w-3/12 bg-gray-2 dark:bg-meta-4 rounded-xl m-2'}>
+                <div className={currentPage == 0 || list.length != pageSize ? 'flex flex-row justify-between w-3/12 bg-gray-2 dark:bg-meta-4 rounded-xl mt-2 mb-2' : 'flex flex-row justify-between w-3/12 bg-gray-2 dark:bg-meta-4 rounded-xl m-2'}>
                     <div onClick={() => setPageAndUpdateQuery(5)} className={pageSize == 5 ? 'm-5 p-2 font-bold text-black bg-white cursor-pointer border' : 'm-5 p-2 font-bold cursor-pointer border'}>
                         <h1>5</h1>
                     </div>
@@ -46,7 +33,7 @@ export const BlockExplorerTransactionsList = () => {
                         <h1>15</h1>
                     </div>
                 </div>
-                <div className={data.length != pageSize ? 'hidden' : 'flex flex-row pt-9 pl-10'}>
+                <div className={list.length != pageSize ? 'hidden' : 'flex flex-row pt-9 pl-10'}>
                     {
                         currentPage != 0 ?
                             <svg
@@ -64,10 +51,10 @@ export const BlockExplorerTransactionsList = () => {
                             <div />
                     }
                     {
-                        data.length == pageSize ?
+                        list.length == pageSize ?
                             <svg
                                 onClick={() => setCurrentPageAndUpdateQuery(currentPage + 1)}
-                                className={data.length == pageSize ? "cursor-pointer w-6 h-6 text-gray-800 dark:text-white" : "hidden"}
+                                className={list.length == pageSize ? "cursor-pointer w-6 h-6 text-gray-800 dark:text-white" : "hidden"}
                                 aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="24"
@@ -115,9 +102,9 @@ export const BlockExplorerTransactionsList = () => {
                     </div>
                 </div>
 
-                {data.map((obj, key) => (
+                {list.map((obj: any, key: any) => (
                     <div
-                        className={`grid grid-cols-3 sm:grid-cols-6 ${key === data.length - 1
+                        className={`grid grid-cols-3 sm:grid-cols-6 ${key === list.length - 1
                             ? ''
                             : 'border-b border-stroke dark:border-strokedark'
                             }`}
@@ -133,11 +120,11 @@ export const BlockExplorerTransactionsList = () => {
                         </div>
 
                         <div className="flex items-center justify-center p-2.5 xl:p-5">
-                            <p className="text-black dark:text-white">{obj.channel}</p>
+                            <p className="text-black dark:text-white">{obj.channelName}</p>
                         </div>
 
                         <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                            <p className="text-black dark:text-white">{obj.tx_id}</p>
+                            <p className="text-black dark:text-white">{obj.txId.length>10?obj.txId.substring(0,15)+"...":obj.txId}</p>
                         </div>
 
                         <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
@@ -145,7 +132,7 @@ export const BlockExplorerTransactionsList = () => {
                         </div>
 
                         <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                            <p className="text-black dark:text-white">{obj.chaincode}</p>
+                            <p className="text-black dark:text-white">{obj.chaincodeName}</p>
                         </div>
 
                         <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">

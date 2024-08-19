@@ -4,6 +4,8 @@ import { DropDownDefault } from './Dropdown';
 interface CardDataStatsProps {
   title: string;
   total: string;
+  some_list?: any;
+  set_channel?: any;
   levelUp?: boolean;
   levelDown?: boolean;
   selector?: boolean;
@@ -17,14 +19,16 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
   levelDown,
   selector,
   children,
+  some_list,
+  set_channel
 }) => {
   return (
     <div className="relative rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="flex h-11.5 w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-4">
         {children}
       </div>
-      {selector ? <div className='absolute right-5 top-5'>
-        <DropDownDefault>
+      {selector && some_list.length != 0 ? <div className='absolute right-5 top-5'>
+        <DropDownDefault some_list={some_list} set_channel={set_channel}>
           <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m16 10 3-3m0 0-3-3m3 3H5v3m3 4-3 3m0 0 3 3m-3-3h14v-3" />
           </svg>

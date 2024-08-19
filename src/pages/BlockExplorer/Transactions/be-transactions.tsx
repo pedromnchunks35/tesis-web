@@ -1,11 +1,63 @@
+import { useEffect, useState } from "react";
 import CardDataStats from "../../../components/CardDataStats";
 import { BlockExplorerTransactionsList } from "./be-transactions-list";
+import { get_connection_details_quarkus } from "../../../utils/connectionProfiles/profiles";
+import { fetchData } from "../../../utils/connection/connection";
 
 export const BlockExplorerTransactions = () => {
+    const [channel, set_current_channel] = useState('');
+    const [channel_list, set_channel_list] = useState<any[]>([]);
+    const [transactions_list, set_transactions_list] = useState<any[]>([]);
+    const [transactions_page, set_transactions_page] = useState(0);
+    const [transactions_size, set_transactions_size] = useState(5);
+
+    const fetchAll = async () => {
+        let connection_details = get_connection_details_quarkus();
+        //? FETCH CHANNELS LIST
+        let urls: any = [];
+        for (let i = 0; i < connection_details.urls.length; i++) {
+            const element = connection_details.urls[i];
+            urls[i] = element +
+                ":" +
+                connection_details.port +
+                "/" +
+                "channel";
+        }
+        let channels_req = await fetchData(
+            urls
+        );
+        //? RETRIEVE FIRST CHANNEL
+        if (channels_req.length != 0) {
+            set_current_channel(channels_req[0].channelName);
+        }
+
+        set_channel_list(channels_req);
+
+        //? RETRIEVE TRANSACTIONS
+        urls = [];
+        for (let i = 0; i < connection_details.urls.length; i++) {
+            const element = connection_details.urls[i];
+            urls[i] = element +
+                ":" +
+                connection_details.port +
+                "/" +
+                "transaction/" +
+                transactions_page +
+                "/" +
+                transactions_size
+        }
+        let transactions_list_req = await fetchData(
+            urls
+        );
+        set_transactions_list(transactions_list_req);
+    }
+    useEffect(() => {
+        fetchAll();
+    }, [channel, transactions_page, transactions_size]);
     return (
         <>
             <div className="pb-10">
-                <CardDataStats title="Channel" total="channel1" selector>
+                <CardDataStats title="Channel" total={channel} some_list={channel_list} set_channel={set_current_channel} selector>
                     <svg
                         className="w-6 h-6 text-gray-800 dark:text-white"
                         aria-hidden="true"
@@ -18,7 +70,7 @@ export const BlockExplorerTransactions = () => {
                     </svg>
                 </CardDataStats>
             </div>
-            <BlockExplorerTransactionsList />
+            <BlockExplorerTransactionsList currentPage={transactions_page} list={transactions_list} pageSize={transactions_size} setCurrentPage={set_transactions_page} setPageSize={set_transactions_size} />
         </>
     );
 }

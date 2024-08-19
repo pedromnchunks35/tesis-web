@@ -8,6 +8,8 @@ interface CardDataStatsProps {
     levelUp?: boolean;
     levelDown?: boolean;
     selector?: boolean;
+    list?: any;
+    set_list_member?: any;
     children: ReactNode;
 }
 
@@ -18,6 +20,8 @@ export const ServiceNameSelector: React.FC<CardDataStatsProps> = ({
     levelDown,
     selector,
     children,
+    list,
+    set_list_member
 }) => {
     return (
         <div className="relative mb-10 rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -25,10 +29,10 @@ export const ServiceNameSelector: React.FC<CardDataStatsProps> = ({
                 {children}
             </div>
             {selector ? <div className='absolute right-5 top-5'>
-                <DropDownServiceSelector>
-                    <svg 
-                    className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m16 10 3-3m0 0-3-3m3 3H5v3m3 4-3 3m0 0 3 3m-3-3h14v-3" />
+                <DropDownServiceSelector list={list} set_list_member={set_list_member}>
+                    <svg
+                        className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m16 10 3-3m0 0-3-3m3 3H5v3m3 4-3 3m0 0 3 3m-3-3h14v-3" />
                     </svg>
                 </DropDownServiceSelector>
             </div> : <div />}
